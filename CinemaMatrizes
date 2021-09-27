@@ -1,0 +1,71 @@
+/* Ex24, Lista 4:
+  Elaborar um programa que gerencia os lugares em uma sala 
+   de cinema. Deverá permitir que o usuário visualize 
+   os lugares disponiveis a cada compra e escolha o lugar 
+   que deseja na sala de cinema. A sala possui 20 fileiras 
+   com 18 cadeiras em cada fileira. O usuário deverá 
+   optar por meia entrada (R$ 15,00) ou inteira (R$ 30,00). 
+   O programa deve imprimir ao término, o faturamento da 
+   sala. O programa deverá terminar, quando todas cadeiras 
+   forem vendidas.
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_FILEIRAS 20
+#define MAX_CADEIRAS 10
+#define INTEIRA 30
+#define MEIA 15
+int main()
+{
+  int sala[MAX_FILEIRAS][MAX_CADEIRAS]={0}, i=0, j=0, lotada=0; 
+  int cadeira=0, fileira=0;
+  int ingresso=0, total=0;
+  // verifica disponibilidade
+  while( lotada!=(MAX_FILEIRAS*MAX_CADEIRAS) )
+  {
+    // Mostra as cadeiras
+    system("cls");
+    for(i=0;i<(MAX_CADEIRAS/2.8); i++)
+      printf("\tTELA");
+    printf("\n");
+    for(i=0; i<MAX_FILEIRAS; i++)
+    {
+      for(j=-1; j<MAX_CADEIRAS; j++)
+      {
+        if(j==-1)
+          printf("%d -\t", i+1);
+        else
+          printf("%d  ", sala[i][j]);
+      }
+      printf("\n");
+    }
+    printf("Informe a FILEIRA que deseja: ");
+    scanf("%d", &fileira);
+    printf("CADEIRA na fileira %d que deseja: ", fileira);
+    scanf("%d", &cadeira);
+    if( sala[fileira-1][cadeira-1] ) 
+    {
+        printf("Cadeira ocupada!!\n\n");
+        system("pause");
+    }
+    else
+    {
+         sala[fileira-1][cadeira-1] = 1;
+         do
+         {
+           printf("Informe ingresso [0]Meia ou [1]Inteira: ");
+           scanf("%d", &ingresso);
+         } while(ingresso<0 || ingresso>1);
+         if(ingresso)
+           total += INTEIRA;
+         else
+           total += MEIA;
+         lotada++;
+    }
+  }
+  printf("Total do Faturamento = R$ %d\n", total);
+  printf("Faturamento Maximo = R$ %d\n", 
+                      MAX_FILEIRAS*MAX_CADEIRAS*INTEIRA);
+  system("pause");
+  return (0);
+}
